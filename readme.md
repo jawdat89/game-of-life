@@ -13,3 +13,10 @@ These rules, which compare the behavior of the automaton to real life, can be co
     3. All other live cells die in the next generation. Similarly, all other dead cells stay dead.
 
 The initial pattern constitutes the seed of the system. The first generation is created by applying the above rules simultaneously to every cell in the seed, live or dead; births and deaths occur simultaneously, and the discrete moment at which this happens is sometimes called a tick.[nb 1] Each generation is a pure function of the preceding one. The rules continue to be applied repeatedly to create further generations. 
+
+
+## to start the program type
+cd app
+npm install
+npm start
+open browser with url of: http://localhost:3001
