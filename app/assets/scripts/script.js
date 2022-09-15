@@ -1,6 +1,6 @@
 // #region global variables
 let grid; // array[x][y]
-let resolution = 20;
+let resolution = 10;
 let cols; // as x
 let rows; // as y
 let canvas;
@@ -44,7 +44,7 @@ const draw = () => {
           let x = i * resolution;
           let y = j * resolution;
           if (grid[i][j] == 1) {
-            ctx.fillStyle = "black";
+            ctx.fillStyle = "white";
             ctx.strokeStyle = "black";
             ctx.strokeRect(x, y, resolution, resolution);
             ctx.fillRect(x, y, resolution - 0.5, resolution - 0.5);
@@ -69,9 +69,9 @@ const draw = () => {
             // count live neighbors
             const neighbors = countLiveNeighbors(grid, i, j);
 
-            if (state === 1 && (neighbors > 2 || neighbors < 3)) {
+            if (state === 1 && (neighbors === 2 || neighbors === 3)) {
               // Rule # 1
-              next[i][j] = 1;
+              next[i][j] = 0;
             } else if (state === 0 && neighbors === 3) {
               // Rule # 2
               next[i][j] = 1;
@@ -84,7 +84,7 @@ const draw = () => {
       }
 
       grid = next;
-    }, 500);
+    }, 750);
 
     canvas.addEventListener("click", () => {
       notClicked = false;
@@ -102,9 +102,6 @@ const setup = () => {
   rows = Math.floor(height / resolution); // as y
   // create grid of rows and cols and fill it with randoms of (0,1)
   grid = generateAndFillTwoDimintionalArray(cols, rows, 2);
-
-  draw();
-
 }
 // #endregion game functions
 
@@ -112,6 +109,10 @@ const setup = () => {
 
 const init = () => {
   setup();
+  let renderer = draw();
+  document.addEventListener('keyup', (e) => {
+    grid = generateAndFillTwoDimintionalArray(cols, rows, 2);
+  });
 }
 
 document.addEventListener("DOMContentLoaded", init);
