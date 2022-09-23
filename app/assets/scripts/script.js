@@ -3,11 +3,11 @@
 
 // #region game functions
 // function for getting two demitional array of nulls
-const generateAndFillTwoDimintionalArray = (colsNumber, rowsNumber) => {
-  const arr = new Array(colsNumber);
-  for (let i = 0; i < colsNumber; i++) {
-    arr[i] = new Array(rowsNumber);
-    for (let j = 0; j < rowsNumber; j++) {
+const generateAndFillTwoDimintionalArray = (cols, rows) => {
+  const arr = new Array(cols);
+  for (let i = 0; i < cols; i++) {
+    arr[i] = new Array(rows);
+    for (let j = 0; j < rows; j++) {
       arr[i][j] = Math.floor(Math.random() * 2);
     }
   }
@@ -31,10 +31,90 @@ const countLiveNeighbors = (arr, x, y, cols, rows) => {
   return sum;
 }
 
+const gameOfLifeRandom = (current) => {
+  const [cols, rows] = current;
+  const next = [...current];
+  for (let i = 0; i < cols.length; i++) {
+    for (let j = 0; j < rows.length; j++) {
+      let state = current[i][j];
+
+      // count live neighbors
+      const neighbors = countLiveNeighbors(current, i, j, cols.length, rows.length);
+
+      if (state === 1 && (neighbors === 2 || neighbors === 3)) {
+        // Rule # 1
+        // Survival: Each live cell with either two or three live neighbors will remain alive for the next generation.
+        next[i][j] = 1;
+      } else if (state === 0 && neighbors === 3) {
+        // Rule # 2
+        // Births: Each dead cell adjacent to exactly three live neighbors will become live in the next generation.
+        next[i][j] = 1;
+      } else {
+        // Death by isolation: Each live cell with one or fewer live neighbors will die in the next generation.
+        // Death by overcrowding: Each live cell with four or more live neighbors will die in the next generation.
+        next[i][j] = 0;
+      }
+    }
+  }
+  return next;
+}
+
+const generateNextGenByRule30 = (current) => {
+  // RULE  #30
+
+  const [cols, rows] = current;
+  const arr = new Array(cols.length);
+  for (let i = 0; i < cols.length; i++) {
+    arr[i] = new Array(rows.length);
+    for (let j = 0; j < rows.length; j++) {
+      const gridValue = current[i][j];
+      if (i > 0 && i + 1 < cols.length) {
+        if (
+          (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 1) ||
+          (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 0) ||
+          (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 1) ||
+          (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 0)
+        ) {
+          arr[i][j] = 0;
+        } else {
+          arr[i][j] = 1;
+        }
+      } else {
+        // if (i === 0) {
+        //   // if (
+        //   //   (current[i][j] === 1 && current[i + 1][j] === 1) ||
+        //   //   (current[i][j] === 1 && current[i + 1][j] === 0) ||
+        //   //   (current[i][j] === 0 && current[i + 1][j] === 1) ||
+        //   //   (current[i][j] === 0 && current[i + 1][j] === 0)
+        //   // ) {
+        //   //   arr[i][j] = 0;
+        //   // } else {
+        //   //   arr[i][j] = 1;
+        //   // }
+        // } else {
+        //   // if (
+        //   //   (current[i - 1][j] === 1 && current[i][j] === 1) ||
+        //   //   (current[i - 1][j] === 0 && current[i][j] === 1) ||
+        //   //   (current[i - 1][j] === 0 && current[i][j] === 0) ||
+        //   //   (current[i - 1][j] === 0 && current[i][j] === 0)
+        //   // ) {
+        //   //   arr[i][j] = 0;
+        //   // } else {
+        //   // }
+        // }
+        arr[i][j] = 1;
+      }
+    }
+  }
+  return arr;
+}
+
 
 const draw = ({ canvasId, grid, resolution, cols, rows }) => {
 
   const canvas = document.querySelector(canvasId);
+  const genLabel = document.querySelector('.gen-label');
+  let generation = 0;
   if (canvas.getContext) {
     setInterval(() => {
       let ctx = canvas.getContext('2d');
@@ -56,32 +136,12 @@ const draw = ({ canvasId, grid, resolution, cols, rows }) => {
       }
 
 
-      let next = grid;
-
-      for (let i = 0; i < cols; i++) {
-        for (let j = 0; j < rows; j++) {
-          let state = grid[i][j];
-
-          // count live neighbors
-          const neighbors = countLiveNeighbors(grid, i, j, cols, rows);
-
-          if (state === 1 && (neighbors === 2 || neighbors === 3)) {
-            // Rule # 1
-            // Survival: Each live cell with either two or three live neighbors will remain alive for the next generation. 
-            next[i][j] = 1;
-          } else if (state === 0 && neighbors === 3) {
-            // Rule # 2
-            // Births: Each dead cell adjacent to exactly three live neighbors will become live in the next generation.
-            next[i][j] = 1;
-          } else {
-            // Death by isolation: Each live cell with one or fewer live neighbors will die in the next generation.
-            // Death by overcrowding: Each live cell with four or more live neighbors will die in the next generation. 
-            next[i][j] = 0;
-          }
-        }
-      }
+      let next = gameOfLifeRandom(grid);
+      // let next = generateNextGenByRule30(grid);
 
       grid = next;
+      generation++;
+      genLabel.textContent = `Gen: ${generation}`;
     }, 100);
   }
 }
