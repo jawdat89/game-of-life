@@ -36,7 +36,6 @@ const draw = ({ canvasId, grid, resolution, cols, rows }) => {
 
   const canvas = document.querySelector(canvasId);
   if (canvas.getContext) {
-    let notClicked = true; // causes Side Effect todo: remove
 
     let renderer = setInterval(() => {
       let ctx = canvas.getContext('2d');
@@ -87,7 +86,6 @@ const draw = ({ canvasId, grid, resolution, cols, rows }) => {
     }, 100);
 
     canvas.addEventListener("click", () => {
-      notClicked = false;
       clearInterval(renderer);
     });
   }
