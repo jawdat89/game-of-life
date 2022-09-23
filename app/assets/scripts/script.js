@@ -36,8 +36,7 @@ const draw = ({ canvasId, grid, resolution, cols, rows }) => {
 
   const canvas = document.querySelector(canvasId);
   if (canvas.getContext) {
-
-    let renderer = setInterval(() => {
+    setInterval(() => {
       let ctx = canvas.getContext('2d');
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
@@ -84,10 +83,6 @@ const draw = ({ canvasId, grid, resolution, cols, rows }) => {
 
       grid = next;
     }, 100);
-
-    canvas.addEventListener("click", () => {
-      clearInterval(renderer);
-    });
   }
 }
 
