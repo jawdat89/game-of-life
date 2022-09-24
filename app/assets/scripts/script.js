@@ -60,10 +60,6 @@ const draw = ({ canvasId, grid, resolution, cols, rows, speed }) => {
       let next = gameOfLifeRandom(grid);
       // let next = generateNextGenByRule(grid);
 
-      if (next === grid) {
-        clearInterval();
-      }
-
       grid = next;
       generation++;
       genLabel.textContent = `Gen: ${generation}`;
