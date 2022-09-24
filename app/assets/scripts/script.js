@@ -59,14 +59,7 @@ const gameOfLifeRandom = (current) => {
   return next;
 }
 
-const generateNextGenByRule30 = (current) => {
-  // #Rule (0,2,5,7,8,10,12,15) - fire
-  // #Rule (0,1,3,6,7,10,11,15) - The matrix
-  // #Rule (0,1,3,6,7,13,14,15) - Chess board
-  // #Rule (0,1,3,8,9,10,13,15) - Forest
-  // #Rule (0,1,3,8,9,11,13,15) - Desert
-  // #Rule (0,1,3,9,10,11,13,15) - Swamp
-  // #Rule (0,1,2,3,4,13,14,15) - Broken screen
+const generateNextGenByRule = (current) => {
 
   const [cols, rows] = current;
   const arr = new Array(cols.length);
@@ -74,31 +67,47 @@ const generateNextGenByRule30 = (current) => {
     arr[i] = new Array(rows.length);
     for (let j = 0; j < rows.length; j++) {
       const gridValue = current[i][j];
-      if (i > 0 && i + 1 < cols.length && j + 1 < rows.length) {
+      if (i > 0 && i + 1 < cols.length && j + 1 < rows.length && j > 0) {
         if (
-          (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||  // 15
-          (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||  // 14
-          (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 1) ||  // 13
-          // (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 0) ||  // 12
-          // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||  // 11
-          // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||  // 10
-          // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 1) ||  // 9
-          // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 0) ||  // 8
-          // (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||  // 7
-          // (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||  // 6
-          // (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 1) ||  // 5
-          (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 0) ||  // 4
-          (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||  // 3
-          (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||  // 2
-          (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 1) ||  // 1
-          (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 0)     // 0
+          (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 1 && current[i][j - 1] === 1) ||  // 31
+          // (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 1 && current[i][j - 1] === 0) ||  // 30
+          // (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 0 && current[i][j-1] === 1) ||  // 29
+          (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 0 && current[i][j - 1] === 0) ||  // 28
+          (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 1 && current[i][j - 1] === 1) ||  // 27
+          (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 1 && current[i][j - 1] === 0) ||  // 26
+          // (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 0 && current[i][j-1] === 1) ||  // 25
+          // (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 0 && current[i][j-1] === 0) ||  // 24
+          (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 1 && current[i][j - 1] === 1) ||  // 23
+          // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 1 && current[i][j - 1] === 0) ||  // 22
+          // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 0 && current[i][j - 1] === 1) ||  // 21
+          // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 0 && current[i][j - 1] === 0) ||  // 20
+          // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 1 && current[i][j-1] === 1) ||  // 19
+          (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 1 && current[i][j - 1] === 0) ||  // 18
+          (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 0 && current[i][j - 1] === 1) ||  // 17
+          // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 0 && current[i][j - 1] === 0) ||  // 16
+          (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 1 && current[i][j - 1] === 1) ||  // 15
+          (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 1 && current[i][j - 1] === 0) ||  // 14
+          // (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 0 && current[i][j - 1] === 1) ||  // 13
+          (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 0 && current[i][j - 1] === 0) ||  // 12
+          (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 1 && current[i][j - 1] === 1) ||  // 11
+          // (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 1 && current[i][j-1] === 0) ||  // 10
+          (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 0 && current[i][j - 1] === 1) ||  // 9
+          (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 0 && current[i][j - 1] === 0) ||  // 8
+          // (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 1 && current[i][j-1] === 1) ||  // 7
+          // (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 1 && current[i][j-1] === 0) ||  // 6
+          // (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 0 && current[i][j - 1] === 1) ||  // 5
+          // (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 0 && current[i][j-1] === 0) ||  // 4
+          // (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 1 && current[i][j - 1] === 1) ||  // 3
+          (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 1 && current[i][j - 1] === 0) ||  // 2
+          (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 0 && current[i][j - 1] === 1) ||  // 1
+          (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 0 && current[i][j - 1] === 0)     // 0
         ) {
           arr[i][j] = 0;
         } else {
           arr[i][j] = 1;
         }
       } else {
-        if (i === 0 && j + 1 < rows.length) {
+        if (i === 0 && j + 1 < rows.length && j > 0) {
           if (
             (current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||
             // (current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||
@@ -113,7 +122,7 @@ const generateNextGenByRule30 = (current) => {
           } else {
             arr[i][j] = 0;
           }
-        } else if (i + 1 === cols.length) {
+        } else if (i + 1 === cols.length && j + 1 < rows.length && j > 0) {
           if (
             (current[i - 1][j] === 1 && current[i][j] === 1 && current[i][j + 1] === 1) ||
             // (current[i - 1][j] === 1 && current[i][j] === 1 && current[i][j + 1] === 0) ||
@@ -166,7 +175,7 @@ const draw = ({ canvasId, grid, resolution, cols, rows, speed }) => {
 
 
       // let next = gameOfLifeRandom(grid);
-      let next = generateNextGenByRule30(grid);
+      let next = generateNextGenByRule(grid);
 
       grid = next;
       generation++;
