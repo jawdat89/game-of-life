@@ -66,6 +66,7 @@ const generateNextGenByRule30 = (current) => {
   // #Rule (0,1,3,8,9,10,13,15) - Forest
   // #Rule (0,1,3,8,9,11,13,15) - Desert
   // #Rule (0,1,3,9,10,11,13,15) - Swamp
+  // #Rule (0,1,2,3,4,13,14,15) - Broken screen
 
   const [cols, rows] = current;
   const arr = new Array(cols.length);
