@@ -61,7 +61,11 @@ const gameOfLifeRandom = (current) => {
 
 const generateNextGenByRule30 = (current) => {
   // #Rule (0,2,5,7,8,10,12,15) - fire
-  // #Rule (0,2,5,7,8,10,12,14) - The matrix
+  // #Rule (0,1,3,6,7,10,11,15) - The matrix
+  // #Rule (0,1,3,6,7,13,14,15) - Chess board
+  // #Rule (0,1,3,8,9,10,13,15) - Forest
+  // #Rule (0,1,3,8,9,11,13,15) - Desert
+  // #Rule (0,1,3,9,10,11,13,15) - Swamp
 
   const [cols, rows] = current;
   const arr = new Array(cols.length);
@@ -72,11 +76,11 @@ const generateNextGenByRule30 = (current) => {
       if (i > 0 && i + 1 < cols.length && j + 1 < rows.length) {
         if (
           (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||  // 15
-          (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||  // 14
-          (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 1) ||  // 13
+          // (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||  // 14
+          // (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 1) ||  // 13
           // (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 0) ||  // 12
           // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||  // 11
-          // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||  // 10
+          (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||  // 10
           // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 1) ||  // 9
           // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 0) ||  // 8
           (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||  // 7
