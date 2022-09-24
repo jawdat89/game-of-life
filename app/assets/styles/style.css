@@ -14,3 +14,10 @@
     font-weight: 700;
 
 }
+
+.info-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 50%;
+}

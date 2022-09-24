@@ -36,8 +36,14 @@ const draw = ({ canvasId, grid, resolution, cols, rows, speed }) => {
   const canvas = document.querySelector(canvasId);
   const genLabel = document.querySelector('.gen-label');
   let generation = 0;
+
   if (canvas.getContext) {
-    setInterval(() => {
+    document.addEventListener("keydown", () => {
+      grid = generateAndFillTwoDimintionalArray(cols, rows);
+      generation = 0;
+    });
+
+    const renderGeneration = () => {
       let ctx = canvas.getContext('2d');
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
@@ -63,7 +69,18 @@ const draw = ({ canvasId, grid, resolution, cols, rows, speed }) => {
       grid = next;
       generation++;
       genLabel.textContent = `Gen: ${generation}`;
-    }, speed);
+    };
+
+    let life = setInterval(renderGeneration, speed);
+
+    document.addEventListener("click", () => {
+      if (life) {
+        clearInterval(life);
+        life = undefined;
+      } else {
+        life = setInterval(renderGeneration, speed);
+      }
+    });
   }
 }
 
