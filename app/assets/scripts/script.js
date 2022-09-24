@@ -31,9 +31,87 @@ const countLiveNeighbors = (arr, x, y, cols, rows) => {
   return sum;
 }
 
+const draw = ({ canvasId, grid, resolution, cols, rows, speed }) => {
+
+  const canvas = document.querySelector(canvasId);
+  const genLabel = document.querySelector('.gen-label');
+  let generation = 0;
+  if (canvas.getContext) {
+    setInterval(() => {
+      let ctx = canvas.getContext('2d');
+      for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+          let x = i * resolution;
+          let y = j * resolution;
+          if (grid[i][j] === 1) {
+            ctx.fillStyle = "black";
+            ctx.strokeStyle = "black";
+            ctx.strokeRect(x, y, resolution, resolution);
+            ctx.fillRect(x, y, resolution - 0.5, resolution - 0.5);
+          } else {
+            ctx.fillStyle = "white";
+            ctx.strokeStyle = "white";
+            ctx.strokeRect(x, y, resolution, resolution);
+          }
+        }
+      }
+
+
+      let next = gameOfLifeRandom(grid);
+      // let next = generateNextGenByRule(grid);
+
+      if (next === grid) {
+        clearInterval();
+      }
+
+      grid = next;
+      generation++;
+      genLabel.textContent = `Gen: ${generation}`;
+    }, speed);
+  }
+}
+
+const setup = ({ canvasId, resolution }) => {
+  // canvas
+  const canvas = document.querySelector(canvasId);
+  const width = canvas.width;
+  const height = canvas.height;
+  const cols = Math.floor(width / resolution); // as x
+  const rows = Math.floor(height / resolution); // as y
+  // create grid of rows and cols and fill it with randoms of (0,1)
+  const grid = generateAndFillTwoDimintionalArray(cols, rows);
+
+  return {
+    grid,
+    cols,
+    rows
+  };
+}
+// #endregion game functions
+
+const init = () => {
+  let grid; // array[x][y]
+  const resolution = 5;
+  const speed = 1;
+  let cols; // as x
+  let rows; // as y
+
+  const setupElements = setup({ canvasId: '#canvas', resolution });
+  grid = setupElements.grid;
+  cols = setupElements.cols;
+  rows = setupElements.rows;
+  draw({ canvasId: '#canvas', grid, resolution, cols, rows, speed: speed });
+}
+
+document.addEventListener("DOMContentLoaded", init);
+
+
 const gameOfLifeRandom = (current) => {
   const [cols, rows] = current;
-  const next = [...current];
+
+  // const next = [...current];
+  const next = generateAndFillTwoDimintionalArray(cols.length, rows.length);
+
   for (let i = 0; i < cols.length; i++) {
     for (let j = 0; j < rows.length; j++) {
       let state = current[i][j];
@@ -510,78 +588,3 @@ const generateNextGenByRule = (current) => {
 
   return arr;
 }
-
-
-const draw = ({ canvasId, grid, resolution, cols, rows, speed }) => {
-
-  const canvas = document.querySelector(canvasId);
-  const genLabel = document.querySelector('.gen-label');
-  let generation = 0;
-  if (canvas.getContext) {
-    setInterval(() => {
-      let ctx = canvas.getContext('2d');
-      for (let i = 0; i < cols; i++) {
-        for (let j = 0; j < rows; j++) {
-          let x = i * resolution;
-          let y = j * resolution;
-          if (grid[i][j] === 1) {
-            ctx.fillStyle = "black";
-            ctx.strokeStyle = "black";
-            ctx.strokeRect(x, y, resolution, resolution);
-            ctx.fillRect(x, y, resolution - 0.5, resolution - 0.5);
-          } else {
-            ctx.fillStyle = "white";
-            ctx.strokeStyle = "white";
-            ctx.strokeRect(x, y, resolution, resolution);
-          }
-        }
-      }
-
-
-      // let next = gameOfLifeRandom(grid);
-      let next = generateNextGenByRule(grid);
-
-      if (next === grid) {
-        clearInterval();
-      }
-
-      grid = next;
-      generation++;
-      genLabel.textContent = `Gen: ${generation}`;
-    }, speed);
-  }
-}
-
-const setup = ({ canvasId, resolution }) => {
-  // canvas
-  const canvas = document.querySelector(canvasId);
-  const width = canvas.width;
-  const height = canvas.height;
-  const cols = Math.floor(width / resolution); // as x
-  const rows = Math.floor(height / resolution); // as y
-  // create grid of rows and cols and fill it with randoms of (0,1)
-  const grid = generateAndFillTwoDimintionalArray(cols, rows);
-
-  return {
-    grid,
-    cols,
-    rows
-  };
-}
-// #endregion game functions
-
-const init = () => {
-  let grid; // array[x][y]
-  const resolution = 5;
-  const speed = 1;
-  let cols; // as x
-  let rows; // as y
-
-  const setupElements = setup({ canvasId: '#canvas', resolution });
-  grid = setupElements.grid;
-  cols = setupElements.cols;
-  rows = setupElements.rows;
-  draw({ canvasId: '#canvas', grid, resolution, cols, rows, speed: speed });
-}
-
-document.addEventListener("DOMContentLoaded", init);
