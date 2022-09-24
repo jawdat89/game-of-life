@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const http = require('http');
-const port = 3001;
+const port = 3002;
 
 app.use(express.static(path.join(__dirname, 'assets')));
 app.set('view engine', 'ejs');
@@ -16,6 +16,6 @@ router.get('/', function (req, res) {
 app.use('/', router);
 
 
-app.listen(process.env.port || 3001);
+app.listen(port);
 
-console.log('Running at port 3001');
+console.log(`Running at port ${port}`);

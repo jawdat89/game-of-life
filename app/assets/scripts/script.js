@@ -71,22 +71,22 @@ const generateNextGenByRule30 = (current) => {
       const gridValue = current[i][j];
       if (i > 0 && i + 1 < cols.length && j + 1 < rows.length) {
         if (
-          // (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||  // 15
-          (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||  // 14
+          (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||  // 15
+          // (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||  // 14
           // (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 1) ||  // 13
-          (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 0) ||  // 12
-          // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||  // 11
+          // (current[i - 1][j] === 1 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 0) ||  // 12
+          (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||  // 11
           (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||  // 10
           // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 1) ||  // 9
           (current[i - 1][j] === 1 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 0) ||  // 8
           (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||  // 7
           // (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 0) || // 6
-          (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 1) ||  // 5
-          // (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 0)  // 4
+          // (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 1) ||  // 5
+          (current[i - 1][j] === 0 && current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 0) || // 4
           // (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||  // 3
           (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||  // 2
-          // (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 1) ||  // 1
-          (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 0)     // 0
+          (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 1)   // 1
+          // (current[i - 1][j] === 0 && current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 0)     // 0
         ) {
           arr[i][j] = 0;
         } else {
@@ -99,9 +99,9 @@ const generateNextGenByRule30 = (current) => {
             // (current[i][j] === 1 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||
             // (current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 1) ||
             (current[i][j] === 1 && current[i + 1][j] === 0 && current[i][j + 1] === 0) ||
-            (current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||
-            // (current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||
-            // (current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 1) ||
+            // (current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 1) ||
+            (current[i][j] === 0 && current[i + 1][j] === 1 && current[i][j + 1] === 0) ||
+            (current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 1) ||
             (current[i][j] === 0 && current[i + 1][j] === 0 && current[i][j + 1] === 0)
           ) {
             arr[i][j] = 1;
@@ -114,9 +114,9 @@ const generateNextGenByRule30 = (current) => {
             (current[i - 1][j] === 1 && current[i][j] === 1 && current[i][j + 1] === 0) ||
             // (current[i - 1][j] === 1 && current[i][j] === 0 && current[i][j + 1] === 1) ||
             (current[i - 1][j] === 1 && current[i][j] === 0 && current[i][j + 1] === 0) ||
-            // (current[i - 1][j] === 0 && current[i][j] === 1 && current[i][j + 1] === 1) ||
-            // (current[i - 1][j] === 0 && current[i][j] === 1 && current[i][j + 1] === 0) ||
-            // (current[i - 1][j] === 0 && current[i][j] === 0 && current[i][j + 1] === 1) ||
+            (current[i - 1][j] === 0 && current[i][j] === 1 && current[i][j + 1] === 1) ||
+            (current[i - 1][j] === 0 && current[i][j] === 1 && current[i][j + 1] === 0) ||
+            (current[i - 1][j] === 0 && current[i][j] === 0 && current[i][j + 1] === 1) ||
             (current[i - 1][j] === 0 && current[i][j] === 0 && current[i][j + 1] === 0)
           ) {
             arr[i][j] = 1;
