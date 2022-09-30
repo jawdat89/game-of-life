@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const http = require('http');
-const port = 3002;
+const port = 3005;
 
 app.use(express.static(path.join(__dirname, 'assets')));
 app.set('view engine', 'ejs');
